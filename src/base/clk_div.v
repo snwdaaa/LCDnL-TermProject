@@ -7,9 +7,9 @@ module clk_div (
     output reg o_tick // 잠깐 HIGH 되는 tick 신호
 );
 
-    // 100MHz -> 1kHz 변환을 위한 카운터 상한값
-    // 100,000 - 1 = 99,999
-    parameter CNT_MAX = 100000 - 1; 
+    // 50MHz -> 1kHz 변환을 위한 카운터 상한값
+    //parameter CNT_MAX = 50000 - 1;
+    parameter CNT_MAX = 10 - 1; // 시뮬레이션 테스트용!! 테스트 끝나면 위의 값 사용
     
     reg [31:0] cnt;
 
