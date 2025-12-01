@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="49" Path="C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.xpr">
+<Project Version="7" Minor="49" Path="C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="f54f592d38e843d3abe8e613a497bcb7"/>
@@ -124,6 +124,14 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/u_game_button.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/src/controller/piezo_ctrl.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
