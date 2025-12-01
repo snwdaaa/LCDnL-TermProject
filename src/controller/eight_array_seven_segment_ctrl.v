@@ -1,4 +1,4 @@
-module u_game_8a_7_segment (
+module eight_array_seven_segment_ctrl (
     input clk,
     input rst,
     input [1:0] i_judge,    // 00:IDLE, 01:MISS, 10:NORMAL, 11:PERFECT

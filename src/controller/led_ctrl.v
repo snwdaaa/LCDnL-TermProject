@@ -1,4 +1,4 @@
-module u_game_led (
+module led_ctrl (
     input clk,              // 시스템 클럭 (100MHz or 50MHz)
     input rst,              // 리셋 신호
     input i_tick,           // 1ms 틱 (clk_div 모듈에서 받아옴)

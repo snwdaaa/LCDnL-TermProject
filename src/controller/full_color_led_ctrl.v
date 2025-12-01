@@ -1,4 +1,4 @@
-module u_game_full_color_led (
+module full_color_led_ctrl (
     input clk,              // 시스템 클럭
     input rst,              // 리셋
     input i_tick,           // 1ms 틱 (애니메이션 속도 조절용)

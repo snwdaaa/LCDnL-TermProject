@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.srcs/constrs_1/new/TermProject.xdc rfile:../../../TermProject.srcs/constrs_1/new/TermProject.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.srcs/constrs_1/new/TermProject.xdc rfile:../../../TermProject.srcs/constrs_1/new/TermProject.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:3 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN M8 [get_ports clk]
 set_property src_info {type:XDC file:1 line:4 export:INPUT save:INPUT read:READ} [current_design]

@@ -22,6 +22,4 @@ module sys_base (
         .cur_time(w_cur_time)
     );
 
-    // ... 이후 w_cur_time을 사용하여 FSM 등에서 판정 로직 수행 ...
-
 endmodule

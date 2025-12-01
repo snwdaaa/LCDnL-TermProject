@@ -1,4 +1,4 @@
-module u_game_button (
+module button_ctrl (
     input clk,              // 시스템 클럭
     input rst,              // 리셋
     input i_tick,           // 1ms 틱 (디바운싱 시간 측정용)

@@ -1,4 +1,4 @@
-module u_game_7_segment (
+module seven_segment_ctrl (
     input clk,              // 시스템 클럭
     input rst,              // 리셋
     input [1:0] i_judge,    // 판정 입력 (00:None, 01:Miss, 10:Normal, 11:Perfect)
