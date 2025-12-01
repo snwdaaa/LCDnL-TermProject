@@ -13,9 +13,9 @@ module button_ctrl (
     // [1] 버튼 매핑 정의 (사용하기 편하게 인덱스 정의)
     // 보드의 버튼 순서에 따라 매핑을 변경할 수 있습니다.
     localparam IDX_START   = 0;
-    localparam IDX_RESTART = 1;
-    localparam IDX_PLAY_L  = 2;
-    localparam IDX_PLAY_R  = 3;
+    localparam IDX_RESTART = 1; // 이거 일단 사용 X
+    localparam IDX_PLAY_U  = 2;
+    localparam IDX_PLAY_D  = 3;
 
     // [2] 내부 레지스터 선언
     reg [3:0] btn_stable;   // 디바운싱이 완료된 안정적인 상태
@@ -65,6 +65,6 @@ module button_ctrl (
     // [5] 출력 할당 (역할 분배)
     assign o_start   = btn_rise[IDX_START];
     assign o_restart = btn_rise[IDX_RESTART];
-    assign o_play    = {btn_rise[IDX_PLAY_R], btn_rise[IDX_PLAY_L]};
+    assign o_play    = {btn_rise[IDX_PLAY_D], btn_rise[IDX_PLAY_U]};
 
 endmodule

@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.runs/synth_1/sys_base.tcl"
+  variable script "C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.runs/synth_1/sys_base.tcl"
   variable category "vivado_synth"
 }
 
@@ -70,7 +70,8 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param synth.incrementalSynthesisCache C:/Users/user/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-16224-DESKTOP-VGR30UJ/incrSyn
+set_param chipscope.maxJobs 4
+set_param synth.incrementalSynthesisCache C:/Users/kkj48/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-1548-BOOK-LUCP9UJFMJ/incrSyn
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -79,18 +80,23 @@ create_project -in_memory -part xc7s75fgga484-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.cache/wt [current_project]
-set_property parent.project_path C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.xpr [current_project]
+set_property webtalk.parent_dir C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.cache/wt [current_project]
+set_property parent.project_path C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo c:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.cache/ip [current_project]
+set_property ip_output_repo c:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/src/base/clk_div.v
-  C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/src/base/game_timer.v
-  C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/src/base/sys_base.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/button_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/clk_div.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/game_timer.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/judgement_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/piezo_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -101,8 +107,8 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.srcs/constrs_1/new/TermProject.xdc
-set_property used_in_implementation false [get_files C:/Users/user/Desktop/Logicyun/LCDnL-TermProject/TermProject.srcs/constrs_1/new/TermProject.xdc]
+read_xdc C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.srcs/constrs_1/new/TermProject.xdc
+set_property used_in_implementation false [get_files C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.srcs/constrs_1/new/TermProject.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]

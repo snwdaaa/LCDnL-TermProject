@@ -9,7 +9,7 @@ module clk_div (
 
     // 50MHz -> 1kHz 변환을 위한 카운터 상한값
     //parameter CNT_MAX = 50000 - 1;
-    parameter CNT_MAX = 10 - 1; // 시뮬레이션 테스트용!! 테스트 끝나면 위의 값 사용
+    parameter CNT_MAX = 50000 - 1; // 시뮬레이션 테스트용!! 테스트 끝나면 위의 값 사용
     
     reg [31:0] cnt;
 
