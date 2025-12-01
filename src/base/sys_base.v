@@ -40,6 +40,10 @@ module sys_base (
     
     // LCD 판정선 감지 신호
     wire w_hit_t1, w_hit_t2;
+    
+    wire [31:0] w_gen_pitch;        // note_gen -> lcd_ctrl
+    wire [31:0] w_curr_pitch_t1;    // lcd_ctrl -> logic
+    wire [31:0] w_curr_pitch_t2;    // lcd_ctrl -> logic
 
     // ====================================================
     // 2. 모듈 조립
@@ -78,33 +82,11 @@ module sys_base (
         .i_cur_time(w_cur_time),
         .o_note_t1(w_note_t1), 
         .o_note_t2(w_note_t2), 
-        .o_game_end(w_game_end)
+        .o_game_end(w_game_end),
+        .o_gen_pitch(w_gen_pitch)   // [연결] 생성된 음계
     );
     
-    // (5) 피에조 컨트롤러
-    piezo_ctrl u_piezo_ctrl (
-        .clk(clk), 
-        .rst(rst), 
-        .i_play_en(w_play_en),     // 판정 모듈에서 받은 신호로 소리 켬
-        .i_cnt_limit(w_cnt_limit), // 판정 모듈에서 받은 주파수 재생
-        .o_piezo(o_piezo)
-    );
-    
-    // (6) 판정 컨트롤러
-    judgement_ctrl u_judge_ctrl (
-        .clk(clk),
-        .rst(rst),
-        .i_tick(w_game_tick),
-        .i_btn_play(w_play_btn),
-        .i_hit_t1(w_hit_t1),     // LCD 감지
-        .i_hit_t2(w_hit_t2),
-        
-        .o_judge(w_judge),
-        .o_play_en(w_play_en),   // -> Piezo 켜기
-        .o_cnt_limit(w_cnt_limit) // -> Piezo 주파수
-    );
-
-    // (7) LCD 컨트롤러
+        // (7) LCD 컨트롤러
     lcd_ctrl u_lcd_ctrl (
         .clk(clk),
         .rst(rst),
@@ -119,7 +101,36 @@ module sys_base (
         
         // 판정 신호 연결
         .o_hit_t1(w_hit_t1), 
-        .o_hit_t2(w_hit_t2)
+        .o_hit_t2(w_hit_t2),
+        
+        .i_gen_pitch(w_gen_pitch),      // [연결] 음계 받아서 운반
+        .o_curr_pitch_t1(w_curr_pitch_t1), // [연결] 배달 완료된 음계
+        .o_curr_pitch_t2(w_curr_pitch_t2)
+    );
+    
+    // (6) 판정 컨트롤러
+    judgement_ctrl u_judge_ctrl (
+        .clk(clk),
+        .rst(rst),
+        .i_tick(w_game_tick),
+        .i_btn_play(w_play_btn),
+        .i_hit_t1(w_hit_t1),     // LCD 감지
+        .i_hit_t2(w_hit_t2),
+        .i_curr_pitch_t1(w_curr_pitch_t1),
+        .i_curr_pitch_t2(w_curr_pitch_t2),
+        
+        .o_judge(w_judge),
+        .o_play_en(w_play_en),   // -> Piezo 켜기
+        .o_cnt_limit(w_cnt_limit) // -> Piezo 주파수
+    );
+    
+        // (5) 피에조 컨트롤러
+    piezo_ctrl u_piezo_ctrl (
+        .clk(clk), 
+        .rst(rst), 
+        .i_play_en(w_play_en),     // 판정 모듈에서 받은 신호로 소리 켬
+        .i_cnt_limit(w_cnt_limit), // 판정 모듈에서 받은 주파수 재생
+        .o_piezo(o_piezo)
     );
 
 endmodule

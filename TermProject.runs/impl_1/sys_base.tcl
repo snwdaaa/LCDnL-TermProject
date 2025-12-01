@@ -126,6 +126,7 @@ set rc [catch {
   create_msg_db write_bitstream.pb
   set_param chipscope.maxJobs 4
   set_param synth.incrementalSynthesisCache C:/Users/kkj48/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-1548-BOOK-LUCP9UJFMJ/incrSyn
+  set_param xicom.use_bs_reader 1
   open_checkpoint sys_base_routed.dcp
   set_property webtalk.parent_dir C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.cache/wt [current_project]
 set_property TOP sys_base [current_fileset]

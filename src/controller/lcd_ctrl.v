@@ -8,6 +8,8 @@ module lcd_ctrl (
     input i_note_t1,        // 윗줄 (Track 1) 노트
     input i_note_t2,        // 아랫줄 (Track 2) 노트
     
+    input [31:0] i_gen_pitch, // note_gen에서 받은 음계
+    
     // LCD 하드웨어 핀 (보드 핀에 연결)
     output reg o_lcd_rs,    // 0:명령, 1:데이터
     output reg o_lcd_rw,    // 0:쓰기, 1:읽기 (항상 0)
@@ -16,7 +18,11 @@ module lcd_ctrl (
     
     // 판정선(맨 왼쪽) 상태 알림 신호
     output o_hit_t1, // Track 1 판정존에 노트 있음!
-    output o_hit_t2  // Track 2 판정존에 노트 있음!
+    output o_hit_t2,  // Track 2 판정존에 노트 있음!
+    
+    // 현재 판정선에 있는 노트의 음계 값
+    output reg [31:0] o_curr_pitch_t1, 
+    output reg [31:0] o_curr_pitch_t2
 );
 
     // ====================================================
@@ -26,23 +32,33 @@ module lcd_ctrl (
     // 1. 화면 버퍼 (16칸 x 2줄)
     reg [7:0] line1 [0:15]; // 윗줄
     reg [7:0] line2 [0:15]; // 아랫줄
+    
+    // 음계 버퍼 (화면과 똑같이 이동하는 투명한 데이터 버퍼)
+    reg [31:0] pitch_buf_t1 [0:15];
+    reg [31:0] pitch_buf_t2 [0:15];
 
     // 2. 노트 캡처 (Note Capture)
     // note_gen에서 보내는 신호는 아주 짧으므로(1클럭), 
     // 다음 스크롤이 일어날 때까지 기억해둬야 합니다.
     reg r_catch_t1, r_catch_t2;
+    
+    // 캡처용 레지스터
+    reg [31:0] r_catch_pitch;
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            r_catch_t1 <= 0;
-            r_catch_t2 <= 0;
+            r_catch_t1 <= 0; r_catch_t2 <= 0;
+            r_catch_pitch <= 0;
         end else begin
-            // 노트 신호가 들어오면 '잡았다!' 하고 깃발을 듭니다.
-            if (i_note_t1) r_catch_t1 <= 1;
-            else if (scroll_en) r_catch_t1 <= 0; // 스크롤 후 초기화
-
-            if (i_note_t2) r_catch_t2 <= 1;
-            else if (scroll_en) r_catch_t2 <= 0;
+            if (i_note_t1) begin
+                    r_catch_t1 <= 1;
+                    r_catch_pitch <= i_gen_pitch; // 음계도 같이 캡처!
+            end else if (scroll_en) r_catch_t1 <= 0; // 스크롤 후 초기화
+            
+            if (i_note_t2) begin
+                r_catch_t2 <= 1;
+                r_catch_pitch <= i_gen_pitch;
+            end else if (scroll_en) r_catch_t2 <= 0;
         end
     end
 
@@ -69,18 +85,28 @@ module lcd_ctrl (
             for (i=0; i<16; i=i+1) begin
                 line1[i] <= 8'h20;
                 line2[i] <= 8'h20;
+                
+                // 음계도 똑같이 초기화
+                pitch_buf_t1[i] <= 0;
+                pitch_buf_t2[i] <= 0;
             end
         end else if (scroll_en) begin
             // [왼쪽으로 이동]
             for (i=0; i<15; i=i+1) begin
                 line1[i] <= line1[i+1];
                 line2[i] <= line2[i+1];
+                
+                // 음계도 똑같이 이동
+                pitch_buf_t1[i] <= pitch_buf_t1[i+1];
+                pitch_buf_t2[i] <= pitch_buf_t2[i+1];
             end
             
             // [오른쪽 끝 채우기]
             // 잡았던 노트가 있으면 'O' (0x4F), 없으면 공백 ' ' (0x20)
             line1[15] <= (r_catch_t1) ? 8'h4F : 8'h20;
             line2[15] <= (r_catch_t2) ? 8'h4F : 8'h20;
+            pitch_buf_t1[15] <= (r_catch_t1) ? r_catch_pitch : 0;
+            pitch_buf_t2[15] <= (r_catch_t2) ? r_catch_pitch : 0;
         end
     end
     
@@ -88,6 +114,12 @@ module lcd_ctrl (
     // 맨 왼쪽(0번) 칸 버퍼 값이 'O'(0x4F)이면 1을 출력합니다.
     assign o_hit_t1 = (line1[0] == 8'h4F);
     assign o_hit_t2 = (line2[0] == 8'h4F);
+    
+    // 맨 왼쪽(0번) 칸의 정보를 내보냅니다.
+    always @(*) begin
+        o_curr_pitch_t1 = pitch_buf_t1[0];
+        o_curr_pitch_t2 = pitch_buf_t2[0];
+    end
 
     // ====================================================
     // [Part 2] LCD 드라이버 (Hardware Control FSM)
