@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date             : Sat Dec  6 17:13:56 2025
+| Date             : Sat Dec  6 17:44:46 2025
 | Host             : BOOK-LUCP9UJFMJ running 64-bit major release  (build 9200)
 | Command          : report_power -file sys_base_power_routed.rpt -pb sys_base_power_summary_routed.pb -rpx sys_base_power_routed.rpx
 | Design           : sys_base
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+----------------------------------+
-| Total On-Chip Power (W)  | 27.930 (Junction temp exceeded!) |
+| Total On-Chip Power (W)  | 42.660 (Junction temp exceeded!) |
 | Design Power Budget (W)  | Unspecified*                     |
 | Power Budget Margin (W)  | NA                               |
-| Dynamic (W)              | 27.498                           |
-| Device Static (W)        | 0.432                            |
+| Dynamic (W)              | 41.835                           |
+| Device Static (W)        | 0.825                            |
 | Effective TJA (C/W)      | 2.7                              |
-| Max Ambient (C)          | 9.0                              |
-| Junction Temperature (C) | 101.0                            |
+| Max Ambient (C)          | 0.0                              |
+| Junction Temperature (C) | 125.0                            |
 | Confidence Level         | Low                              |
 | Setting File             | ---                              |
 | Simulation Activity File | ---                              |
@@ -52,17 +52,17 @@ Table of Contents
 +-------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                 | Power (W) | Used     | Available | Utilization (%) |
 +-------------------------+-----------+----------+-----------+-----------------+
-| Slice Logic             |     3.047 |     1463 |       --- |             --- |
-|   LUT as Logic          |     2.848 |      671 |     48000 |            1.40 |
-|   CARRY4                |     0.149 |      106 |     16000 |            0.66 |
-|   Register              |     0.045 |      460 |     96000 |            0.48 |
+| Slice Logic             |     4.913 |     1603 |       --- |             --- |
+|   LUT as Logic          |     4.646 |      710 |     48000 |            1.48 |
+|   CARRY4                |     0.211 |      110 |     16000 |            0.69 |
+|   Register              |     0.051 |      498 |     96000 |            0.52 |
 |   BUFG                  |     0.006 |        1 |        32 |            3.13 |
 |   LUT as Shift Register |    <0.001 |       18 |     17600 |            0.10 |
 |   Others                |     0.000 |       23 |       --- |             --- |
-| Signals                 |     2.440 |     1060 |       --- |             --- |
-| I/O                     |    22.011 |       52 |       338 |           15.38 |
-| Static Power            |     0.432 |          |           |                 |
-| Total                   |    27.930 |          |           |                 |
+| Signals                 |     3.947 |     1163 |       --- |             --- |
+| I/O                     |    32.974 |       52 |       338 |           15.38 |
+| Static Power            |     0.825 |          |           |                 |
+| Total                   |    42.660 |          |           |                 |
 +-------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -72,16 +72,16 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     5.755 |       5.499 |      0.256 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.867 |       0.806 |      0.061 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     6.231 |       6.227 |      0.004 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     9.411 |       8.873 |      0.538 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     1.317 |       1.208 |      0.110 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     9.334 |       9.330 |      0.004 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       1.000 |     0.017 |       0.000 |      0.017 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.040 |       0.000 |      0.040 |       NA    | Unspecified | NA         |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 
@@ -137,16 +137,16 @@ Table of Contents
 +----------------+-----------+
 | Name           | Power (W) |
 +----------------+-----------+
-| sys_base       |    27.498 |
-|   u_array_seg  |     2.360 |
+| sys_base       |    41.835 |
+|   u_array_seg  |     3.352 |
 |   u_btn_ctrl   |     0.011 |
 |   u_game_timer |     0.016 |
-|   u_judge_ctrl |     0.010 |
-|   u_lcd_ctrl   |     0.594 |
-|   u_led_ctrl   |     0.029 |
-|   u_note_gen   |     0.356 |
-|   u_piezo_ctrl |     0.391 |
-|   u_score_ctrl |     1.673 |
+|   u_judge_ctrl |     0.077 |
+|   u_lcd_ctrl   |     0.618 |
+|   u_led_ctrl   |     0.030 |
+|   u_note_gen   |     0.371 |
+|   u_piezo_ctrl |     0.393 |
+|   u_score_ctrl |     3.948 |
 +----------------+-----------+
 
 

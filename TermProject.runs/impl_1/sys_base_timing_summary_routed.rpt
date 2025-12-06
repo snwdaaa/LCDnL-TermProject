@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date         : Sat Dec  6 17:13:56 2025
+| Date         : Sat Dec  6 17:44:47 2025
 | Host         : BOOK-LUCP9UJFMJ running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -max_paths 10 -file sys_base_timing_summary_routed.rpt -pb sys_base_timing_summary_routed.pb -rpx sys_base_timing_summary_routed.rpx -warn_on_violation
 | Design       : sys_base
@@ -39,12 +39,12 @@ check_timing report
 
 Table of Contents
 -----------------
-1. checking no_clock (478)
+1. checking no_clock (516)
 2. checking constant_clock (0)
 3. checking pulse_width_clock (0)
-4. checking unconstrained_internal_endpoints (1295)
+4. checking unconstrained_internal_endpoints (1399)
 5. checking no_input_delay (3)
-6. checking no_output_delay (39)
+6. checking no_output_delay (41)
 7. checking multiple_clock (0)
 8. checking generated_clocks (0)
 9. checking loops (0)
@@ -52,9 +52,9 @@ Table of Contents
 11. checking partial_output_delay (0)
 12. checking latch_loops (0)
 
-1. checking no_clock (478)
+1. checking no_clock (516)
 --------------------------
- There are 478 register/latch pins with no clock driven by root clock pin: clk (HIGH)
+ There are 516 register/latch pins with no clock driven by root clock pin: clk (HIGH)
 
 
 2. checking constant_clock (0)
@@ -67,9 +67,9 @@ Table of Contents
  There are 0 register/latch pins which need pulse_width check
 
 
-4. checking unconstrained_internal_endpoints (1295)
+4. checking unconstrained_internal_endpoints (1399)
 ---------------------------------------------------
- There are 1295 pins that are not constrained for maximum delay. (HIGH)
+ There are 1399 pins that are not constrained for maximum delay. (HIGH)
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 
@@ -81,9 +81,9 @@ Table of Contents
  There are 0 input ports with no input delay but user has a false path constraint.
 
 
-6. checking no_output_delay (39)
+6. checking no_output_delay (41)
 --------------------------------
- There are 39 ports with no output delay specified. (HIGH)
+ There are 41 ports with no output delay specified. (HIGH)
 
  There are 0 ports with no output delay but user has a false path constraint
 

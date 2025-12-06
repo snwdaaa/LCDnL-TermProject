@@ -61,6 +61,11 @@ module sys_base (
     wire [1:0] w_judge;         // 판정 결과 (Judge -> Score, LED)
     wire [1:0] w_judge_hold;
     wire [15:0] w_total_score;  // 계산된 점수 (Score -> 7-Segment)
+    
+    wire w_hit_t1, w_pre_hit_t1, w_miss_t1;
+    wire w_hit_t2, w_pre_hit_t2, w_miss_t2;
+    wire w_clr_t1_perf, w_clr_t1_norm;
+    wire w_clr_t2_perf, w_clr_t2_norm;
 
     // ====================================================
     // 2. 모듈 조립
@@ -103,7 +108,7 @@ module sys_base (
         .o_gen_pitch(w_gen_pitch)   // [연결] 생성된 음계
     );
     
-        // (7) LCD 컨트롤러
+    // (7) LCD 컨트롤러
     lcd_ctrl u_lcd_ctrl (
         .clk(clk),
         .rst(rst),
@@ -116,13 +121,23 @@ module sys_base (
         .o_lcd_e(o_lcd_e),
         .o_lcd_data(o_lcd_data),
         
-        // 판정 신호 연결
-        .o_hit_t1(w_hit_t1), 
-        .o_hit_t2(w_hit_t2),
-        
         .i_gen_pitch(w_gen_pitch),      // [연결] 음계 받아서 운반
         .o_curr_pitch_t1(w_curr_pitch_t1), // [연결] 배달 완료된 음계
-        .o_curr_pitch_t2(w_curr_pitch_t2)
+        .o_curr_pitch_t2(w_curr_pitch_t2),
+        
+        // 입력: 삭제 요청 받기
+        .i_clear_t1_perf(w_clr_t1_perf),
+        .i_clear_t1_norm(w_clr_t1_norm),
+        .i_clear_t2_perf(w_clr_t2_perf),
+        .i_clear_t2_norm(w_clr_t2_norm),
+        
+        // 출력: 상황 보고
+        .o_hit_t1(w_hit_t1),
+        .o_pre_hit_t1(w_pre_hit_t1),
+        .o_miss_t1(w_miss_t1),
+        .o_hit_t2(w_hit_t2),
+        .o_pre_hit_t2(w_pre_hit_t2),
+        .o_miss_t2(w_miss_t2)
     );
     
     // 판정 컨트롤러
@@ -131,15 +146,19 @@ module sys_base (
         .rst(rst),
         .i_tick(w_game_tick),
         .i_btn_play(w_play_btn),
-        .i_hit_t1(w_hit_t1),     // LCD 감지
-        .i_hit_t2(w_hit_t2),
+        .i_hit_t1(w_hit_t1), .i_pre_hit_t1(w_pre_hit_t1), .i_miss_t1(w_miss_t1),
+        .i_hit_t2(w_hit_t2), .i_pre_hit_t2(w_pre_hit_t2), .i_miss_t2(w_miss_t2),
         .i_curr_pitch_t1(w_curr_pitch_t1),
         .i_curr_pitch_t2(w_curr_pitch_t2),
         
         .o_judge(w_judge),
         .o_judge_hold(w_judge_hold),
         .o_play_en(w_play_en),   // -> Piezo 켜기
-        .o_cnt_limit(w_cnt_limit) // -> Piezo 주파수
+        .o_cnt_limit(w_cnt_limit), // -> Piezo 주파수
+        
+        // 출력: 노트 삭제 요청
+        .o_clear_t1_perf(w_clr_t1_perf), .o_clear_t1_norm(w_clr_t1_norm),
+        .o_clear_t2_perf(w_clr_t2_perf), .o_clear_t2_norm(w_clr_t2_norm)
     );
     
     // 점수 모듈
