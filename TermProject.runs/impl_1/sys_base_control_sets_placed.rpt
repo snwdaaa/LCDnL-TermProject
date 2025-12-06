@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.1 (win64) Build 2902540 Wed May 27 19:54:49 MDT 2020
-| Date         : Sat Dec  6 16:42:50 2025
+| Date         : Sat Dec  6 17:13:39 2025
 | Host         : BOOK-LUCP9UJFMJ running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file sys_base_control_sets_placed.rpt
 | Design       : sys_base
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |    16 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    70 |
+| Unused register locations in slices containing registers |    68 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -43,10 +43,10 @@ Table of Contents
 | >= 0 to < 4        |     3 |
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     0 |
-| >= 8 to < 10       |     3 |
+| >= 8 to < 10       |     2 |
 | >= 10 to < 12      |     0 |
 | >= 12 to < 14      |     0 |
-| >= 14 to < 16      |     0 |
+| >= 14 to < 16      |     1 |
 | >= 16              |     9 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
@@ -62,7 +62,7 @@ Table of Contents
 | No           | No                    | Yes                    |             101 |           31 |
 | No           | Yes                   | No                     |               0 |            0 |
 | Yes          | No                    | No                     |              18 |            5 |
-| Yes          | No                    | Yes                    |             339 |           98 |
+| Yes          | No                    | Yes                    |             341 |          104 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -73,21 +73,21 @@ Table of Contents
 +----------------+----------------------------------+------------------+------------------+----------------+--------------+
 |  Clock Signal  |           Enable Signal          | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
 +----------------+----------------------------------+------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | u_lcd_ctrl/o_lcd_e_i_1_n_0       | rst_IBUF         |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | u_btn_ctrl/btn_stable[2]_i_1_n_0 | rst_IBUF         |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | u_btn_ctrl/btn_stable[3]_i_1_n_0 | rst_IBUF         |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | u_lcd_ctrl/o_lcd_e_i_1_n_0       | rst_IBUF         |                1 |              1 |         1.00 |
 |  clk_IBUF_BUFG | u_lcd_ctrl/char_idx[4]_i_1_n_0   | rst_IBUF         |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | u_lcd_ctrl/o_lcd_rs_i_1_n_0      | rst_IBUF         |                4 |              9 |         2.25 |
-|  clk_IBUF_BUFG | u_lcd_ctrl/btn_stable_reg[2][0]  | rst_IBUF         |                3 |              9 |         3.00 |
-|  clk_IBUF_BUFG | u_note_gen/E[0]                  | rst_IBUF         |                2 |              9 |         4.50 |
-|  clk_IBUF_BUFG | u_judge_ctrl/E[0]                | rst_IBUF         |                4 |             16 |         4.00 |
-|  clk_IBUF_BUFG | u_note_gen/note_idx              | rst_IBUF         |                4 |             22 |         5.50 |
-|  clk_IBUF_BUFG | u_lcd_ctrl/delay_cnt[31]_i_1_n_0 | rst_IBUF         |               10 |             32 |         3.20 |
-|  clk_IBUF_BUFG | u_lcd_ctrl/line1_reg[0][5]_0[0]  | rst_IBUF         |               14 |             32 |         2.29 |
+|  clk_IBUF_BUFG | u_lcd_ctrl/o_lcd_rs_i_1_n_0      | rst_IBUF         |                5 |              9 |         1.80 |
+|  clk_IBUF_BUFG | u_note_gen/o_note_t2_reg_0[0]    | rst_IBUF         |                3 |              9 |         3.00 |
+|  clk_IBUF_BUFG | u_lcd_ctrl/E[0]                  | rst_IBUF         |                6 |             15 |         2.50 |
+|  clk_IBUF_BUFG | u_judge_ctrl/o_judge_reg[1]_0[0] | rst_IBUF         |                4 |             16 |         4.00 |
+|  clk_IBUF_BUFG | u_note_gen/note_idx              | rst_IBUF         |                4 |             18 |         4.50 |
+|  clk_IBUF_BUFG | u_lcd_ctrl/delay_cnt[31]_i_1_n_0 | rst_IBUF         |               11 |             32 |         2.91 |
+|  clk_IBUF_BUFG | u_lcd_ctrl/btn_stable_reg[2][0]  | rst_IBUF         |               13 |             32 |         2.46 |
 |  clk_IBUF_BUFG | u_note_gen/o_game_end_reg_0      | rst_IBUF         |                8 |             32 |         4.00 |
 |  clk_IBUF_BUFG | u_lcd_ctrl/scroll_en             |                  |                5 |             36 |         7.20 |
 |  clk_IBUF_BUFG | u_clk_div/w_game_tick            | rst_IBUF         |               19 |             73 |         3.84 |
-|  clk_IBUF_BUFG | u_lcd_ctrl/scroll_en             | rst_IBUF         |               25 |             97 |         3.88 |
+|  clk_IBUF_BUFG | u_lcd_ctrl/scroll_en             | rst_IBUF         |               26 |             97 |         3.73 |
 |  clk_IBUF_BUFG |                                  | rst_IBUF         |               31 |            101 |         3.26 |
 +----------------+----------------------------------+------------------+------------------+----------------+--------------+
 

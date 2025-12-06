@@ -21,7 +21,7 @@ module note_gen (
     reg [31:0] note_pitch [0:NOTE_COUNT-1]; // 음계 저장 배열
 
 // ==========================================
-    // ? Smoke on the Water (Intro Riff)
+    // Smoke on the Water (Intro Riff)
     // ==========================================
     
     // 1. 주파수 상수 정의 (50MHz 클럭 기준 카운터 값)
@@ -63,6 +63,9 @@ module note_gen (
         note_time[10] = 7164;      note_track[10] = 2; note_pitch[10] = Bb3; // 아랫줄
         note_time[11] = 7700;      note_track[11] = 1; note_pitch[11] = G3;  // 윗줄
     end
+    
+    // 노트가 LCD 끝까지 가는 데 걸리는 시간 (약 5초 여유)
+    parameter END_DELAY = 5000;
 
     // ==========================================
     // 시퀀서 로직 (FSM)
@@ -98,9 +101,11 @@ module note_gen (
                     note_idx <= note_idx + 1;
                 end
             end else begin
-                // 모든 노트를 다 보냈으면 게임 종료 신호
-                // (마지막 노트 보내고 조금 뒤에 끝내고 싶으면 여기서 시간 체크를 더 해도 됨)
-                o_game_end <= 1;
+                // 모든 노트 생성 후, 마지막 노트가 판정선에 도착할 때까지 대기
+                // ex) 마지막 노트 시간(7700) + 5000ms = 12700ms가 되어야 종료
+                if (i_cur_time >= note_time[NOTE_COUNT-1] + END_DELAY) begin
+                    o_game_end <= 1;
+                end
             end
         end
     end

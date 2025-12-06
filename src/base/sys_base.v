@@ -59,6 +59,7 @@ module sys_base (
     
     // 모듈 간 연결을 위한 신호선 (Wire)
     wire [1:0] w_judge;         // 판정 결과 (Judge -> Score, LED)
+    wire [1:0] w_judge_hold;
     wire [15:0] w_total_score;  // 계산된 점수 (Score -> 7-Segment)
 
     // ====================================================
@@ -136,6 +137,7 @@ module sys_base (
         .i_curr_pitch_t2(w_curr_pitch_t2),
         
         .o_judge(w_judge),
+        .o_judge_hold(w_judge_hold),
         .o_play_en(w_play_en),   // -> Piezo 켜기
         .o_cnt_limit(w_cnt_limit) // -> Piezo 주파수
     );
@@ -154,7 +156,7 @@ module sys_base (
         .rst(rst),
         .i_tick(w_game_tick),
         .i_game_over(w_game_end),
-        .i_judge(w_judge),      // [입력] 판정 결과를 받아서 색상 표현
+        .i_judge(w_judge_hold),      // [입력] 판정 결과를 받아서 색상 표현
         .o_fcl_r(o_fcl_r),
         .o_fcl_g(o_fcl_g),
         .o_fcl_b(o_fcl_b)
@@ -162,7 +164,7 @@ module sys_base (
 
     // 단일 7-Segment 컨트롤러 (판정 점수 2,1,0 표시)
     seven_segment_ctrl u_single_seg (
-        .i_judge(w_judge),      // 판정 결과 입력
+        .i_judge(w_judge_hold),      // 판정 결과 입력
         .o_seg(o_single_seg)    // -> 단일 세그먼트 핀으로 출력
     );
 
@@ -170,7 +172,7 @@ module sys_base (
     eight_array_seven_segment_ctrl u_array_seg (
         .clk(clk),
         .rst(rst),
-        .i_judge(w_judge),       // 텍스트 표시용
+        .i_judge(w_judge_hold),       // 텍스트 표시용
         .i_data(w_total_score),  // 점수 표시용
         .o_seg(o_array_seg),     // -> 어레이 세그먼트 패턴 핀
         .o_com(o_array_com)      // -> 어레이 공통 핀

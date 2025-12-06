@@ -10,11 +10,27 @@ module lcd_ctrl (
     
     input [31:0] i_gen_pitch, // note_gen에서 받은 음계
     
+    // 판정 성공 시 노트를 지우기 위한 신호
+    input i_clear_t1_perf, // Track 1 Perfect 위치(0번) 지워라
+    input i_clear_t1_norm, // Track 1 Normal 위치(1번) 지워라
+    input i_clear_t2_perf,
+    input i_clear_t2_norm,
+    
     // LCD 하드웨어 핀 (보드 핀에 연결)
     output reg o_lcd_rs,    // 0:명령, 1:데이터
     output reg o_lcd_rw,    // 0:쓰기, 1:읽기 (항상 0)
     output reg o_lcd_e,     // Enable 펄스
     output reg [7:0] o_lcd_data, // 데이터 버스
+    
+    // 판정용 상태 신호
+    output o_hit_t1,      // [0번 칸] Perfect 존 감지
+    output o_pre_hit_t1,  // [1번 칸] Normal 존 감지 - NEW!
+    output o_hit_t2,      
+    output o_pre_hit_t2,  
+    
+    // 놓침(Miss) 알림 신호 (노트가 끝으로 떨어짐)
+    output reg o_miss_t1, 
+    output reg o_miss_t2,
     
     // 판정선(맨 왼쪽) 상태 알림 신호
     output o_hit_t1, // Track 1 판정존에 노트 있음!

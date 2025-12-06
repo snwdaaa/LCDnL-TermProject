@@ -13,6 +13,7 @@ module judgement_ctrl (
 
     // 출력 신호
     output reg [1:0] o_judge,      // 판정 결과 (00:None, 11:Perfect ...)
+    output reg [1:0] o_judge_hold, // [Hold]  디스플레이용 (다음 판정까지 유지) - NEW!
     output reg o_play_en,          // 피에조 켜기
     output reg [31:0] o_cnt_limit // 피에조 주파수 값
 );
@@ -24,6 +25,7 @@ module judgement_ctrl (
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             o_judge <= 0;
+            o_judge_hold <= 0;
             o_play_en <= 0;
             o_cnt_limit <= 0;
             sound_timer <= 0;
@@ -35,6 +37,7 @@ module judgement_ctrl (
             // [Track 1 성공?] LCD에 노트 있고(i_hit_t1) & 버튼 눌렀을 때(i_btn_play[0])
             if (i_hit_t1 && i_btn_play[0]) begin
                 o_judge <= 2'b11;        // Perfect!
+                o_judge_hold <= 2'b11;   // 디스플레이용 Hold (업데이트)
                 o_play_en <= 1;          // 소리 ON
                 o_cnt_limit <= i_curr_pitch_t1;  // LCD로부터 받은 음계 재생
                 sound_timer <= SOUND_DURATION;  // 타이머 충전
@@ -43,6 +46,7 @@ module judgement_ctrl (
             // [Track 2 성공?]
             if (i_hit_t2 && i_btn_play[1]) begin
                 o_judge <= 2'b11;        // Perfect!
+                o_judge_hold <= 2'b11;   // 디스플레이용 Hold (업데이트)
                 o_play_en <= 1;          // 소리 ON
                 o_cnt_limit <= i_curr_pitch_t2;  // LCD로부터 받은 음계 재생
                 sound_timer <= SOUND_DURATION;  // 타이머 충전
