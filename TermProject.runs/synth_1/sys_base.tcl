@@ -71,7 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 4
-set_param synth.incrementalSynthesisCache C:/Users/kkj48/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-1548-BOOK-LUCP9UJFMJ/incrSyn
+set_param synth.incrementalSynthesisCache C:/Users/kkj48/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-26608-BOOK-LUCP9UJFMJ/incrSyn
 set_param xicom.use_bs_reader 1
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
@@ -92,11 +92,15 @@ OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/button_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/clk_div.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/eight_array_seven_segment_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/full_color_led_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/game_timer.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/judgement_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/piezo_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/score_ctrl.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/seven_segment_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v
 }
 OPTRACE "Adding files" END { }

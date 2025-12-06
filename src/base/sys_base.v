@@ -11,6 +11,18 @@ module sys_base (
     output o_lcd_e,
     output [7:0] o_lcd_data,
     
+    // 풀컬러 LED 출력 포트
+    output [3:0] o_fcl_r, 
+    output [3:0] o_fcl_g, 
+    output [3:0] o_fcl_b,
+    
+    // 단일 7-Segment용 출력 핀 (Single)
+    output [7:0] o_single_seg, 
+
+    // 8-Array Segment용 출력 핀 (Array)
+    output [7:0] o_array_seg, // a~g, dp 패턴
+    output [7:0] o_array_com, // Digit Select
+    
     // 버튼 입력
     input [3:0] i_btn       // 버튼 입력 4개
 );
@@ -44,6 +56,10 @@ module sys_base (
     wire [31:0] w_gen_pitch;        // note_gen -> lcd_ctrl
     wire [31:0] w_curr_pitch_t1;    // lcd_ctrl -> logic
     wire [31:0] w_curr_pitch_t2;    // lcd_ctrl -> logic
+    
+    // 모듈 간 연결을 위한 신호선 (Wire)
+    wire [1:0] w_judge;         // 판정 결과 (Judge -> Score, LED)
+    wire [15:0] w_total_score;  // 계산된 점수 (Score -> 7-Segment)
 
     // ====================================================
     // 2. 모듈 조립
@@ -108,7 +124,7 @@ module sys_base (
         .o_curr_pitch_t2(w_curr_pitch_t2)
     );
     
-    // (6) 판정 컨트롤러
+    // 판정 컨트롤러
     judgement_ctrl u_judge_ctrl (
         .clk(clk),
         .rst(rst),
@@ -124,7 +140,43 @@ module sys_base (
         .o_cnt_limit(w_cnt_limit) // -> Piezo 주파수
     );
     
-        // (5) 피에조 컨트롤러
+    // 점수 모듈
+    score_ctrl u_score_ctrl (
+        .clk(clk),
+        .rst(rst),
+        .i_judge(w_judge),      // [입력] 판정 결과를 받아서
+        .o_score(w_total_score) // [출력] 누적 점수를 계산해 보냄
+    );
+
+    // Full Color LED
+    full_color_led_ctrl u_led_ctrl (
+        .clk(clk),
+        .rst(rst),
+        .i_tick(w_game_tick),
+        .i_game_over(w_game_end),
+        .i_judge(w_judge),      // [입력] 판정 결과를 받아서 색상 표현
+        .o_fcl_r(o_fcl_r),
+        .o_fcl_g(o_fcl_g),
+        .o_fcl_b(o_fcl_b)
+    );
+
+    // 단일 7-Segment 컨트롤러 (판정 점수 2,1,0 표시)
+    seven_segment_ctrl u_single_seg (
+        .i_judge(w_judge),      // 판정 결과 입력
+        .o_seg(o_single_seg)    // -> 단일 세그먼트 핀으로 출력
+    );
+
+    // 8-Array Segment 컨트롤러 (텍스트 + 누적 점수)
+    eight_array_seven_segment_ctrl u_array_seg (
+        .clk(clk),
+        .rst(rst),
+        .i_judge(w_judge),       // 텍스트 표시용
+        .i_data(w_total_score),  // 점수 표시용
+        .o_seg(o_array_seg),     // -> 어레이 세그먼트 패턴 핀
+        .o_com(o_array_com)      // -> 어레이 공통 핀
+    );
+    
+    // (5) 피에조 컨트롤러
     piezo_ctrl u_piezo_ctrl (
         .clk(clk), 
         .rst(rst), 
