@@ -95,6 +95,7 @@ read_verilog -library xil_defaultlib {
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/eight_array_seven_segment_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/full_color_led_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/game_timer.v
+  C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/intro_player.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/judgement_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v
   C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/led_ctrl.v

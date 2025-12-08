@@ -47,8 +47,18 @@ module sys_base (
     wire [1:0] w_play_btn;  // [1]: Down(Track2), [0]: Up(Track1)
     
     // 피에조 제어 신호 (Judgement -> Piezo)
-    wire w_play_en;         // 소리 재생 Enable
-    wire [31:0] w_cnt_limit;// 재생할 주파수 값
+//    wire w_play_en;         // 소리 재생 Enable
+//    wire [31:0] w_cnt_limit;// 재생할 주파수 값
+
+    // 소리 관련 와이어 이름 구분
+    wire w_game_play_en;      // 게임 중 판정 소리 (from Judge)
+    wire [31:0] w_game_pitch; // 게임 중 판정 주파수 (from Judge)
+
+    wire w_intro_play_en;     // 인트로 소리 (from Intro Player)
+    wire [31:0] w_intro_pitch;// 인트로 주파수 (from Intro Player)
+    
+    wire w_final_piezo_en;    // 최종 피에조 입력
+    wire [31:0] w_final_pitch;// 최종 피에조 주파수
     
     // 판정 결과 신호 (현재 사용 안 함, 추후 확장용)
     wire [1:0] w_judge;     
@@ -107,6 +117,19 @@ module sys_base (
         .i_tick(w_gated_tick),
         .cur_time(w_cur_time)
     );
+    
+    intro_player u_intro_player (
+        .clk(clk),
+        .rst(rst),
+        .i_tick(w_game_tick),        // 1ms 틱 (gated 아님! 계속 흘러야 함)
+        .i_enable(~r_game_start),    // 게임 시작 전(0)일 때만 동작
+        .o_play_en(w_intro_play_en),
+        .o_pitch(w_intro_pitch)
+    );
+    
+    // 게임 시작 전이면 intro 소리, 시작 후면 game 소리 연결
+    assign w_final_piezo_en = (r_game_start) ? w_game_play_en : w_intro_play_en;
+    assign w_final_pitch    = (r_game_start) ? w_game_pitch   : w_intro_pitch;
     
     // (3) 버튼 컨트롤러
     button_ctrl u_btn_ctrl (
@@ -178,8 +201,8 @@ module sys_base (
         
         .o_judge(w_judge),
         .o_judge_hold(w_judge_hold),
-        .o_play_en(w_play_en),   // -> Piezo 켜기
-        .o_cnt_limit(w_cnt_limit), // -> Piezo 주파수
+        .o_play_en(w_game_play_en),   // -> Piezo 켜기
+        .o_cnt_limit(w_game_pitch), // -> Piezo 주파수
         
         // 출력: 노트 삭제 요청
         .o_clear_t1_perf(w_clr_t1_perf), .o_clear_t1_norm(w_clr_t1_norm),
@@ -226,8 +249,8 @@ module sys_base (
     piezo_ctrl u_piezo_ctrl (
         .clk(clk), 
         .rst(rst), 
-        .i_play_en(w_play_en),     // 판정 모듈에서 받은 신호로 소리 켬
-        .i_cnt_limit(w_cnt_limit), // 판정 모듈에서 받은 주파수 재생
+        .i_play_en(w_final_piezo_en),     // 판정 모듈에서 받은 신호로 소리 켬
+        .i_cnt_limit(w_final_pitch), // 판정 모듈에서 받은 주파수 재생
         .o_piezo(o_piezo)
     );
     

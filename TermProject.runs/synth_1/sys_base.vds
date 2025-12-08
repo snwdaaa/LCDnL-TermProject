@@ -2,8 +2,8 @@
 # Vivado v2020.1 (64-bit)
 # SW Build 2902540 on Wed May 27 19:54:49 MDT 2020
 # IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
-# Start of session at: Mon Dec  8 19:09:35 2025
-# Process ID: 9592
+# Start of session at: Mon Dec  8 19:22:04 2025
+# Process ID: 1392
 # Current directory: C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.runs/synth_1
 # Command line: vivado.exe -log sys_base.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source sys_base.tcl
 # Log file: C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.runs/synth_1/sys_base.vds
@@ -17,7 +17,7 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s75'
 INFO: [Device 21-403] Loading part xc7s75fgga484-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 29528
+INFO: [Synth 8-7075] Helper process launched with PID 12792
 CRITICAL WARNING: [Synth 8-976] note_time has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:37]
 CRITICAL WARNING: [Synth 8-2654] second declaration of note_time ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:37]
 INFO: [Synth 8-994] note_time is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:19]
@@ -30,17 +30,17 @@ INFO: [Synth 8-994] note_pitch is declared here [C:/Users/kkj48/Desktop/Projects
 WARNING: [Synth 8-6901] identifier 'NOTE_COUNT' is used before its declaration [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:19]
 WARNING: [Synth 8-6901] identifier 'NOTE_COUNT' is used before its declaration [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:20]
 WARNING: [Synth 8-6901] identifier 'NOTE_COUNT' is used before its declaration [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:21]
-CRITICAL WARNING: [Synth 8-976] w_judge has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:64]
-CRITICAL WARNING: [Synth 8-2654] second declaration of w_judge ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:64]
-INFO: [Synth 8-994] w_judge is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:54]
-CRITICAL WARNING: [Synth 8-976] w_hit_t1 has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:68]
-CRITICAL WARNING: [Synth 8-2654] second declaration of w_hit_t1 ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:68]
-INFO: [Synth 8-994] w_hit_t1 is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:57]
-CRITICAL WARNING: [Synth 8-976] w_hit_t2 has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:69]
-CRITICAL WARNING: [Synth 8-2654] second declaration of w_hit_t2 ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:69]
-INFO: [Synth 8-994] w_hit_t2 is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:57]
+CRITICAL WARNING: [Synth 8-976] w_judge has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:74]
+CRITICAL WARNING: [Synth 8-2654] second declaration of w_judge ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:74]
+INFO: [Synth 8-994] w_judge is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:64]
+CRITICAL WARNING: [Synth 8-976] w_hit_t1 has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:78]
+CRITICAL WARNING: [Synth 8-2654] second declaration of w_hit_t1 ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:78]
+INFO: [Synth 8-994] w_hit_t1 is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:67]
+CRITICAL WARNING: [Synth 8-976] w_hit_t2 has already been declared [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:79]
+CRITICAL WARNING: [Synth 8-2654] second declaration of w_hit_t2 ignored [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:79]
+INFO: [Synth 8-994] w_hit_t2 is declared here [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:67]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1025.047 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1028.906 ; gain = 0.000
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'sys_base' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:1]
 INFO: [Synth 8-6157] synthesizing module 'clk_div' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/clk_div.v:4]
@@ -48,13 +48,22 @@ INFO: [Synth 8-6157] synthesizing module 'clk_div' [C:/Users/kkj48/Desktop/Proje
 INFO: [Synth 8-6155] done synthesizing module 'clk_div' (1#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/clk_div.v:4]
 INFO: [Synth 8-6157] synthesizing module 'game_timer' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/game_timer.v:4]
 INFO: [Synth 8-6155] done synthesizing module 'game_timer' (2#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/game_timer.v:4]
+INFO: [Synth 8-6157] synthesizing module 'intro_player' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/intro_player.v:1]
+	Parameter D4 bound to: 85132 - type: integer 
+	Parameter D5 bound to: 42565 - type: integer 
+	Parameter A4 bound to: 56818 - type: integer 
+	Parameter G4 bound to: 63775 - type: integer 
+	Parameter G5 bound to: 31888 - type: integer 
+	Parameter Fs5 bound to: 33784 - type: integer 
+	Parameter NOTE_DURATION bound to: 200 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'intro_player' (3#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/intro_player.v:1]
 INFO: [Synth 8-6157] synthesizing module 'button_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/button_ctrl.v:1]
 	Parameter IDX_START bound to: 0 - type: integer 
 	Parameter IDX_RESTART bound to: 1 - type: integer 
 	Parameter IDX_PLAY_U bound to: 2 - type: integer 
 	Parameter IDX_PLAY_D bound to: 3 - type: integer 
 	Parameter DEBOUNCE_TIME bound to: 20 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'button_ctrl' (3#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/button_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'button_ctrl' (4#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/button_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'note_gen' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:4]
 	Parameter G3 bound to: 127551 - type: integer 
 	Parameter Bb3 bound to: 107296 - type: integer 
@@ -62,7 +71,7 @@ INFO: [Synth 8-6157] synthesizing module 'note_gen' [C:/Users/kkj48/Desktop/Proj
 	Parameter Db4 bound to: 90197 - type: integer 
 	Parameter NOTE_COUNT bound to: 12 - type: integer 
 	Parameter END_DELAY bound to: 5000 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'note_gen' (4#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'note_gen' (5#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/fsm/note_gen.v:4]
 INFO: [Synth 8-6157] synthesizing module 'lcd_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v:1]
 	Parameter SCROLL_SPEED bound to: 300 - type: integer 
 	Parameter S_INIT bound to: 0 - type: integer 
@@ -75,25 +84,25 @@ INFO: [Synth 8-6157] synthesizing module 'lcd_ctrl' [C:/Users/kkj48/Desktop/Proj
 	Parameter DLY_2MS bound to: 100000 - type: integer 
 	Parameter DLY_50US bound to: 2500 - type: integer 
 INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v:209]
-INFO: [Synth 8-6155] done synthesizing module 'lcd_ctrl' (5#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'lcd_ctrl' (6#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/lcd_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'judgement_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/judgement_ctrl.v:1]
 	Parameter SOUND_DURATION bound to: 100 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'judgement_ctrl' (6#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/judgement_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'judgement_ctrl' (7#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/judgement_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'score_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/score_ctrl.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'score_ctrl' (7#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/score_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'score_ctrl' (8#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/score_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'full_color_led_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/full_color_led_ctrl.v:1]
 	Parameter COLOR_OFF bound to: 12'b000000000000 
 	Parameter COLOR_RED bound to: 12'b111100000000 
 	Parameter COLOR_YEL bound to: 12'b111111110000 
 	Parameter COLOR_GRN bound to: 12'b000011110000 
 	Parameter ANIM_SPEED bound to: 500 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'full_color_led_ctrl' (8#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/full_color_led_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'full_color_led_ctrl' (9#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/full_color_led_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'seven_segment_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/seven_segment_ctrl.v:1]
 	Parameter SEG_0 bound to: 8'b01111111 
 	Parameter SEG_1 bound to: 8'b00000110 
 	Parameter SEG_2 bound to: 8'b01011011 
 	Parameter SEG_BLK bound to: 8'b00000000 
-INFO: [Synth 8-6155] done synthesizing module 'seven_segment_ctrl' (9#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/seven_segment_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'seven_segment_ctrl' (10#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/seven_segment_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'eight_array_seven_segment_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/eight_array_seven_segment_ctrl.v:1]
 	Parameter SEG_0 bound to: 8'b00111111 
 	Parameter SEG_1 bound to: 8'b00000110 
@@ -117,26 +126,26 @@ INFO: [Synth 8-6157] synthesizing module 'eight_array_seven_segment_ctrl' [C:/Us
 	Parameter CH_I bound to: 8'b00000110 
 	Parameter CH_S bound to: 8'b01101101 
 	Parameter CH_BLK bound to: 8'b00000000 
-INFO: [Synth 8-6155] done synthesizing module 'eight_array_seven_segment_ctrl' (10#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/eight_array_seven_segment_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'eight_array_seven_segment_ctrl' (11#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/eight_array_seven_segment_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'piezo_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/piezo_ctrl.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'piezo_ctrl' (11#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/piezo_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'piezo_ctrl' (12#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/piezo_ctrl.v:1]
 INFO: [Synth 8-6157] synthesizing module 'led_ctrl' [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/led_ctrl.v:1]
 	Parameter MOVE_SPEED bound to: 100 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'led_ctrl' (12#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/led_ctrl.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'sys_base' (13#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'led_ctrl' (13#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/controller/led_ctrl.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'sys_base' (14#1) [C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/src/base/sys_base.v:1]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1025.047 ; gain = 0.000
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1028.906 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1025.047 ; gain = 0.000
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1028.906 ; gain = 0.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1025.047 ; gain = 0.000
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1028.906 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1025.047 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1028.906 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -147,26 +156,26 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/sys_base_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1079.527 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1050.215 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1079.527 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1050.215 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1050.215 ; gain = 21.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s75fgga484-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1050.215 ; gain = 21.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1050.215 ; gain = 21.309
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'lcd_ctrl'
 ---------------------------------------------------------------------------------------------------
@@ -182,31 +191,32 @@ INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'lcd_c
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'lcd_ctrl'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1050.215 ; gain = 21.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   2 Input   32 Bit       Adders := 4     
+	   2 Input   32 Bit       Adders := 5     
 	   2 Input   16 Bit       Adders := 2     
 	   2 Input    5 Bit       Adders := 5     
 	   2 Input    4 Bit       Adders := 1     
-	   2 Input    3 Bit       Adders := 3     
+	   2 Input    3 Bit       Adders := 4     
 	   2 Input    2 Bit       Adders := 1     
 +---Registers : 
-	               32 Bit    Registers := 40    
+	               32 Bit    Registers := 42    
 	               16 Bit    Registers := 1     
 	                8 Bit    Registers := 34    
 	                5 Bit    Registers := 6     
 	                4 Bit    Registers := 2     
 	                3 Bit    Registers := 1     
 	                2 Bit    Registers := 4     
-	                1 Bit    Registers := 19    
+	                1 Bit    Registers := 20    
 +---Muxes : 
+	   9 Input   32 Bit        Muxes := 1     
+	   2 Input   32 Bit        Muxes := 22    
 	  13 Input   32 Bit        Muxes := 1     
-	   2 Input   32 Bit        Muxes := 18    
 	   7 Input   32 Bit        Muxes := 1     
 	   4 Input   16 Bit        Muxes := 1     
 	   2 Input    8 Bit        Muxes := 37    
@@ -220,13 +230,13 @@ Detailed RTL Component Info :
 	   2 Input    4 Bit        Muxes := 2     
 	   9 Input    4 Bit        Muxes := 2     
 	   4 Input    4 Bit        Muxes := 1     
-	   2 Input    3 Bit        Muxes := 6     
+	   2 Input    3 Bit        Muxes := 7     
 	   7 Input    3 Bit        Muxes := 1     
 	   3 Input    3 Bit        Muxes := 1     
 	  13 Input    2 Bit        Muxes := 1     
 	   2 Input    2 Bit        Muxes := 6     
 	   3 Input    2 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 45    
+	   2 Input    1 Bit        Muxes := 48    
 	   3 Input    1 Bit        Muxes := 2     
 	   7 Input    1 Bit        Muxes := 8     
 	   4 Input    1 Bit        Muxes := 2     
@@ -246,25 +256,25 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1069.910 ; gain = 41.004
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1069.910 ; gain = 41.004
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1079.527 ; gain = 54.480
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1069.910 ; gain = 41.004
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1122.426 ; gain = 97.379
+Finished Technology Mapping : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1126.457 ; gain = 97.551
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -282,37 +292,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished IO Insertion : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -344,40 +354,40 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |CARRY4 |   110|
-|3     |LUT1   |    42|
-|4     |LUT2   |   257|
-|5     |LUT3   |   230|
-|6     |LUT4   |   166|
-|7     |LUT5   |   116|
-|8     |LUT6   |   287|
+|2     |CARRY4 |   118|
+|3     |LUT1   |    43|
+|4     |LUT2   |   258|
+|5     |LUT3   |   235|
+|6     |LUT4   |   177|
+|7     |LUT5   |   159|
+|8     |LUT6   |   301|
 |9     |SRL16E |    18|
-|10    |FDCE   |   500|
+|10    |FDCE   |   554|
 |11    |FDPE   |    65|
 |12    |FDRE   |    18|
 |13    |IBUF   |     5|
 |14    |OBUF   |    56|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:23 . Memory (MB): peak = 1127.828 ; gain = 48.301
-Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1127.828 ; gain = 102.781
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:23 . Memory (MB): peak = 1131.852 ; gain = 81.637
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1131.852 ; gain = 102.945
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1136.695 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 110 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1131.852 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 118 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1136.695 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1136.363 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-50 Infos, 3 Warnings, 12 Critical Warnings and 0 Errors encountered.
+52 Infos, 3 Warnings, 12 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 1136.695 ; gain = 111.648
+synth_design: Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 1136.363 ; gain = 107.457
 INFO: [Common 17-1381] The checkpoint 'C:/Users/kkj48/Desktop/Projects/Vivado/TermProject/TermProject.runs/synth_1/sys_base.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file sys_base_utilization_synth.rpt -pb sys_base_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Mon Dec  8 19:10:08 2025...
+INFO: [Common 17-206] Exiting Vivado at Mon Dec  8 19:22:37 2025...
