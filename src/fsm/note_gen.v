@@ -12,17 +12,20 @@ module note_gen (
     output reg o_game_end    // 노래가 끝났음을 알리는 신호
 );
 
-    // Astronomia (Coffin Dance) Frequencies
-    localparam F4  = 71586;  // 파 (Main Base)
-    localparam C5  = 47778;  // 도 (High)
+    // Megalovania Note Frequencies
+    localparam D4  = 85132;  // 레
+    localparam D5  = 42565;  // 높은 레
     localparam A4  = 56818;  // 라
+    localparam Gs4 = 60197;  // 솔# (Ab4)
     localparam G4  = 63775;  // 솔
-    localparam Bb4 = 53629;  // 시b
-    localparam Ab4 = 60197;  // 라b (솔#)
-    localparam E4  = 75843;  // 미
+    localparam F4  = 71586;  // 파
+    localparam C4  = 95556;  // 도
+    localparam Cs4 = 90194;  // 도#
+    localparam B3  = 101239; // 시
+    localparam Bb3 = 107259; // 시b
 
     // 노트 개수 설정 (16개 패턴 * 8노트 = 128개)
-    parameter NOTE_COUNT = 200;
+    parameter NOTE_COUNT = 128;
     integer i, j; // 반복문 변수
     
     // 패턴별 베이스 노트 (첫 2개 음) 저장용 임시 변수

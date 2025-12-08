@@ -82,21 +82,22 @@ module sys_base (
     
     // 게임 시작 상태를 저장할 레지스터
     reg r_game_start;
-    reg r_game_end;
     
     // "게임 시작 전" 또는 "게임 종료 후"에 켜지도록 OR 연산 추가
-    wire w_siren_on = (~r_game_start) || r_game_end;
+    wire w_siren_on = (~r_game_start) || w_game_end;
     
-    // [추가] 시작 버튼 누르면 게임 시작 상태로 변경
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+    if (rst) begin
+        r_game_start <= 0;
+    end else begin
+        if (w_game_end) begin       // [추가] 게임이 끝나면 시작 상태 해제!
             r_game_start <= 0;
-        end else begin
-            if (w_start_btn) begin // 버튼 컨트롤러에서 온 시작 신호
-                r_game_start <= 1;
-            end
+        end
+        else if (w_start_btn) begin // 게임 시작
+            r_game_start <= 1;
         end
     end
+end
 
     // [중요] 게임이 시작되었을 때만 시간이 흐르도록 Tick 신호를 제어
     // r_game_start가 1일 때만 w_game_tick이 타이머로 전달됨
