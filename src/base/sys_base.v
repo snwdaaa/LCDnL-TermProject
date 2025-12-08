@@ -24,7 +24,10 @@ module sys_base (
     output [7:0] o_array_com, // Digit Select
     
     // 버튼 입력
-    input [3:0] i_btn       // 버튼 입력 4개
+    input [3:0] i_btn,       // 버튼 입력 4개
+    
+    // 8개 LED 출력 포트
+    output [7:0] o_led
 );
 
     // ====================================================
@@ -66,6 +69,25 @@ module sys_base (
     wire w_hit_t2, w_pre_hit_t2, w_miss_t2;
     wire w_clr_t1_perf, w_clr_t1_norm;
     wire w_clr_t2_perf, w_clr_t2_norm;
+    
+    // 게임 시작 상태를 저장할 레지스터
+    reg r_game_start;
+    
+    // [추가] 시작 버튼 누르면 게임 시작 상태로 변경
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            r_game_start <= 0;
+        end else begin
+            if (w_start_btn) begin // 버튼 컨트롤러에서 온 시작 신호
+                r_game_start <= 1;
+            end
+        end
+    end
+
+    // [중요] 게임이 시작되었을 때만 시간이 흐르도록 Tick 신호를 제어
+    // r_game_start가 1일 때만 w_game_tick이 타이머로 전달됨
+    wire w_gated_tick;
+    assign w_gated_tick = w_game_tick && r_game_start;
 
     // ====================================================
     // 2. 모듈 조립
@@ -82,7 +104,7 @@ module sys_base (
     game_timer u_game_timer (
         .clk(clk),
         .rst(rst),
-        .i_tick(w_game_tick),
+        .i_tick(w_gated_tick),
         .cur_time(w_cur_time)
     );
     
@@ -137,7 +159,10 @@ module sys_base (
         .o_miss_t1(w_miss_t1),
         .o_hit_t2(w_hit_t2),
         .o_pre_hit_t2(w_pre_hit_t2),
-        .o_miss_t2(w_miss_t2)
+        .o_miss_t2(w_miss_t2),
+        
+        .i_game_start(r_game_start),
+        .i_game_over(w_game_end) // note_gen에서 나온 종료 신호
     );
     
     // 판정 컨트롤러
@@ -204,6 +229,16 @@ module sys_base (
         .i_play_en(w_play_en),     // 판정 모듈에서 받은 신호로 소리 켬
         .i_cnt_limit(w_cnt_limit), // 판정 모듈에서 받은 주파수 재생
         .o_piezo(o_piezo)
+    );
+    
+    // LED 컨트롤러 
+    led_ctrl u_discrete_led_ctrl (
+        .clk(clk),
+        .rst(rst),
+        .i_tick(w_game_tick),      // 1ms 틱 연결
+        .i_game_start(r_game_start), // 게임 시작 신호 (이전 단계에서 만듬)
+        .i_game_over(w_game_end),    // 게임 종료 신호
+        .o_led(o_led)              // -> [출력] 보드 핀으로 연결
     );
 
 endmodule

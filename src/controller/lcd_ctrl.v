@@ -15,6 +15,10 @@ module lcd_ctrl (
     input i_clear_t2_perf,
     input i_clear_t2_norm,
     
+    // 게임 상태 신호
+    input i_game_start, // 0: 대기 화면, 1: 게임 진행
+    input i_game_over,  // 0: 진행 중, 1: 게임 종료
+    
     // LCD 하드웨어 핀 (보드 핀에 연결)
     output reg o_lcd_rs,    // 0:명령, 1:데이터
     output reg o_lcd_rw,    // 0:쓰기, 1:읽기 (항상 0)
@@ -70,57 +74,86 @@ module lcd_ctrl (
     integer i;
     always @(posedge clk or posedge rst) begin
         if (rst) begin
+            // 리셋 시 "Press Start..." 문구로 초기화
+            // "Press Start Btn " (16글자)
+            line1[0]<="P"; line1[1]<="r"; line1[2]<="e"; line1[3]<="s"; 
+            line1[4]<="s"; line1[5]<=" "; line1[6]<="S"; line1[7]<="t"; 
+            line1[8]<="a"; line1[9]<="r"; line1[10]<="t"; line1[11]<=" "; 
+            line1[12]<="B"; line1[13]<="t"; line1[14]<="n"; line1[15]<=" ";
+            
             // 초기화
             for (i=0; i<16; i=i+1) begin
-                line1[i] <= 8'h20; line2[i] <= 8'h20;
+                line2[i] <= 8'h20; // 아랫줄 공백    
                 pitch_buf_t1[i] <= 0; pitch_buf_t2[i] <= 0;
             end
             r_catch_t1 <= 0; r_catch_t2 <= 0; r_catch_pitch <= 0;
             o_miss_t1 <= 0; o_miss_t2 <= 0;
-        end else begin
-            // (1) Miss 감지 플래그 초기화 (매 클럭마다 리셋)
-            o_miss_t1 <= 0; 
-            o_miss_t2 <= 0;
-
-            // (2) 스크롤 동작 (Shift)
-            if (scroll_en) begin
-                // 이동하기 전에 맨 끝(0번)에 노트가 있었으면 -> Miss 발생!
-                if (line1[0] == 8'h4F) o_miss_t1 <= 1;
-                if (line2[0] == 8'h4F) o_miss_t2 <= 1;
-
-                // [왼쪽으로 이동]
-                for (i=0; i<15; i=i+1) begin
-                    line1[i] <= line1[i+1];
-                    line2[i] <= line2[i+1];
-                    pitch_buf_t1[i] <= pitch_buf_t1[i+1];
-                    pitch_buf_t2[i] <= pitch_buf_t2[i+1];
-                end
-                
-                // [오른쪽 끝 채우기]
-                line1[15] <= (r_catch_t1) ? 8'h4F : 8'h20;
-                line2[15] <= (r_catch_t2) ? 8'h4F : 8'h20;
-                pitch_buf_t1[15] <= (r_catch_t1) ? r_catch_pitch : 0;
-                pitch_buf_t2[15] <= (r_catch_t2) ? r_catch_pitch : 0;
-                
-                // 캡처 초기화
-                r_catch_t1 <= 0; r_catch_t2 <= 0;
-            end 
-            else begin
-                // 스크롤이 아닐 때: 새 노트 캡처
-                if (i_note_t1) begin r_catch_t1 <= 1; r_catch_pitch <= i_gen_pitch; end
-                if (i_note_t2) begin r_catch_t2 <= 1; r_catch_pitch <= i_gen_pitch; end
+        end
+        else begin
+            // (1) 우선순위 1: 게임 오버 화면
+            if (i_game_over) begin
+                // "   Game Over!   "
+                line1[0]<=" "; line1[1]<=" "; line1[2]<=" "; line1[3]<="G"; 
+                line1[4]<="a"; line1[5]<="m"; line1[6]<="e"; line1[7]<=" "; 
+                line1[8]<="O"; line1[9]<="v"; line1[10]<="e"; line1[11]<="r"; 
+                line1[12]<="!"; line1[13]<=" "; line1[14]<=" "; line1[15]<=" ";
+                // 아랫줄은 점수 등을 표시하거나 공백 유지
             end
-
-            // (3) [NEW] 노트 지우기 (Clear Note) - 판정 성공 시 실행
-            // Judgement 모듈에서 요청이 오면 해당 칸을 공백으로 덮어씀
+            // (2) 우선순위 2: 게임 대기 화면 (시작 전)
+            else if (i_game_start == 0) begin
+                // 리셋과 동일하게 "Press Start Btn " 유지
+                line1[0]<="P"; line1[1]<="r"; line1[2]<="e"; line1[3]<="s"; 
+                line1[4]<="s"; line1[5]<=" "; line1[6]<="S"; line1[7]<="t"; 
+                line1[8]<="a"; line1[9]<="r"; line1[10]<="t"; line1[11]<=" "; 
+                line1[12]<="B"; line1[13]<="t"; line1[14]<="n"; line1[15]<=" ";
+            end        
+            // (3) 우선순위 3: 게임 플레이 (기존 스크롤 로직)
             
-            // Track 1 Clear
-            if (i_clear_t1_perf) begin line1[0] <= 8'h20; pitch_buf_t1[0] <= 0; end
-            if (i_clear_t1_norm) begin line1[1] <= 8'h20; pitch_buf_t1[1] <= 0; end
-            
-            // Track 2 Clear
-            if (i_clear_t2_perf) begin line2[0] <= 8'h20; pitch_buf_t2[0] <= 0; end
-            if (i_clear_t2_norm) begin line2[1] <= 8'h20; pitch_buf_t2[1] <= 0; end
+            else begin
+                // (1) Miss 감지 플래그 초기화 (매 클럭마다 리셋)
+                o_miss_t1 <= 0; 
+                o_miss_t2 <= 0;
+    
+                // (2) 스크롤 동작 (Shift)
+                if (scroll_en) begin
+                    // 이동하기 전에 맨 끝(0번)에 노트가 있었으면 -> Miss 발생!
+                    if (line1[0] == 8'h4F) o_miss_t1 <= 1;
+                    if (line2[0] == 8'h4F) o_miss_t2 <= 1;
+    
+                    // [왼쪽으로 이동]
+                    for (i=0; i<15; i=i+1) begin
+                        line1[i] <= line1[i+1];
+                        line2[i] <= line2[i+1];
+                        pitch_buf_t1[i] <= pitch_buf_t1[i+1];
+                        pitch_buf_t2[i] <= pitch_buf_t2[i+1];
+                    end
+                    
+                    // [오른쪽 끝 채우기]
+                    line1[15] <= (r_catch_t1) ? 8'h4F : 8'h20;
+                    line2[15] <= (r_catch_t2) ? 8'h4F : 8'h20;
+                    pitch_buf_t1[15] <= (r_catch_t1) ? r_catch_pitch : 0;
+                    pitch_buf_t2[15] <= (r_catch_t2) ? r_catch_pitch : 0;
+                    
+                    // 캡처 초기화
+                    r_catch_t1 <= 0; r_catch_t2 <= 0;
+                end 
+                else begin
+                    // 스크롤이 아닐 때: 새 노트 캡처
+                    if (i_note_t1) begin r_catch_t1 <= 1; r_catch_pitch <= i_gen_pitch; end
+                    if (i_note_t2) begin r_catch_t2 <= 1; r_catch_pitch <= i_gen_pitch; end
+                end
+    
+                // (3) [NEW] 노트 지우기 (Clear Note) - 판정 성공 시 실행
+                // Judgement 모듈에서 요청이 오면 해당 칸을 공백으로 덮어씀
+                
+                // Track 1 Clear
+                if (i_clear_t1_perf) begin line1[0] <= 8'h20; pitch_buf_t1[0] <= 0; end
+                if (i_clear_t1_norm) begin line1[1] <= 8'h20; pitch_buf_t1[1] <= 0; end
+                
+                // Track 2 Clear
+                if (i_clear_t2_perf) begin line2[0] <= 8'h20; pitch_buf_t2[0] <= 0; end
+                if (i_clear_t2_norm) begin line2[1] <= 8'h20; pitch_buf_t2[1] <= 0; end
+            end
         end
     end
     

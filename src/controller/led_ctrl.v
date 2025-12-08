@@ -1,51 +1,73 @@
 module led_ctrl (
-    input clk,              // 시스템 클럭 (100MHz or 50MHz)
-    input rst,              // 리셋 신호
-    input i_tick,           // 1ms 틱 (clk_div 모듈에서 받아옴)
-    input i_spawn_note,     // 노트 생성 신호 (1 = 노트 생성, 악보 or 버튼에서 입력)
-    output reg [7:0] o_led, // LED 출력 (이걸 보드 LED 핀에 연결)
-    output o_is_target      // [중요] 타겟(LED8) 도착 알림 신호 (나중에 판정 모듈에 연결)
+    input clk,              // 시스템 클럭 (50MHz)
+    input rst,              // 리셋
+    input i_tick,           // 1ms 틱 (속도 조절용)
+    input i_game_start,     // 게임 시작 신호 (1일 때만 움직임)
+    input i_game_over,      // (선택) 게임 오버 시 깜빡이게 할 수도 있음
+    
+    output reg [7:0] o_led  // 8개 LED 출력
 );
 
-    // [1] 속도 조절 파라미터 (난이도 조절)
-    // 200 = 200ms마다 한 칸 이동. 숫자를 줄이면 빨라집니다.
-    parameter NOTE_SPEED = 200; 
+    // ==========================================
+    // 설정: 속도 조절
+    // ==========================================
+    parameter MOVE_SPEED = 100; // 100ms마다 한 칸 이동 (작을수록 빠름)
+    
+    reg [31:0] move_cnt;    // 시간 카운터
+    reg [2:0]  led_idx;     // 현재 켜진 LED 위치 (0~7)
+    reg        dir;         // 이동 방향 (0: 왼쪽->오른쪽, 1: 오른쪽->왼쪽)
 
-    reg [31:0] speed_cnt;
-    wire move_en; // 이동 허가 신호
-
-    // [2] 이동 타이밍 생성 로직 (Timer)
+    // ==========================================
+    // 동작 로직
+    // ==========================================
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            speed_cnt <= 0;
-        end else if (i_tick) begin
-            // NOTE_SPEED 만큼 1ms 틱을 셉니다.
-            if (speed_cnt >= NOTE_SPEED - 1) begin
-                speed_cnt <= 0;
-            end else begin
-                speed_cnt <= speed_cnt + 1;
+            o_led <= 8'b0000_0000;
+            move_cnt <= 0;
+            led_idx <= 0;
+            dir <= 0;
+        end 
+        else if (i_game_start && !i_game_over) begin
+            // 1. 타이머 동작 (MOVE_SPEED 마다 트리거)
+            if (i_tick) begin
+                if (move_cnt >= MOVE_SPEED - 1) begin
+                    move_cnt <= 0;
+                    
+                    // 2. LED 위치 이동 및 방향 전환
+                    if (dir == 0) begin 
+                        // [정방향] 0 -> 7
+                        if (led_idx == 7) begin
+                            dir <= 1;       // 끝에 닿으면 방향 반대로
+                            led_idx <= 6;
+                        end else begin
+                            led_idx <= led_idx + 1;
+                        end
+                    end 
+                    else begin 
+                        // [역방향] 7 -> 0
+                        if (led_idx == 0) begin
+                            dir <= 0;       // 끝에 닿으면 방향 반대로
+                            led_idx <= 1;
+                        end else begin
+                            led_idx <= led_idx - 1;
+                        end
+                    end
+                end 
+                else begin
+                    move_cnt <= move_cnt + 1;
+                end
             end
+            
+            // 3. 현재 위치의 LED 켜기 (Decoder)
+            o_led <= (8'b1 << led_idx);
+            
+        end 
+        else begin
+            // 게임 중이 아닐 때는 모두 끄거나, 특정 패턴 유지
+            o_led <= 8'b0000_0000;
+            move_cnt <= 0;
+            led_idx <= 0;
         end
     end
-
-    // 카운터가 0이 되는 순간마다 1번씩만 High가 됩니다.
-    assign move_en = (i_tick && (speed_cnt == 0));
-
-    // [3] 시프트 레지스터 로직 (핵심: 데이터 이동)
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            o_led <= 8'b00000000; // 초기화: 모든 불 끄기
-        end else if (move_en) begin
-            // [이동 원리: Left -> Right]
-            // o_led 값을 왼쪽으로 Shift (<< 1) 하여 데이터를 상위 비트로 밉니다.
-            // 빈 자리가 된 0번 비트(LSB) 자리에 i_spawn_note 값을 채워 넣습니다.
-            // 예: 00000000 -> 00000001 -> 00000010 -> ... -> 10000000
-            o_led <= (o_led << 1) | i_spawn_note;
-        end
-    end
-
-    // [4] 타겟 도착 확인
-    // 가장 오른쪽(LED8)인 7번 비트에 불이 들어왔는지 확인
-    assign o_is_target = o_led[7]; 
 
 endmodule
