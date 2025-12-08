@@ -1,73 +1,59 @@
 module intro_player (
     input clk,
     input rst,
-    input i_tick,          // 1ms 틱
-    input i_enable,        // 1일 때만 소리 재생 (게임 시작 전)
+    input i_tick,          // 1ms 틱 (sys_base에서 들어오는 타이밍 신호)
+    input i_enable,        // 1일 때만 사이렌 울림 (게임 시작 전 or 종료 후)
     
     output reg o_play_en,      // 피에조 켜기/끄기
     output reg [31:0] o_pitch  // 피에조 주파수 값 (Counter Limit)
 );
 
     // ==========================================
-    // "Sweet Child O' Mine" Riff Frequencies
+    // 데프콘 사이렌 주파수 설정
     // 공식: 50MHz / (Freq * 2)
     // ==========================================
-    localparam D4  = 85132; // 293.66 Hz
-    localparam D5  = 42565; // 587.33 Hz
-    localparam A4  = 56818; // 440.00 Hz
-    localparam G4  = 63775; // 392.00 Hz
-    localparam G5  = 31888; // 783.99 Hz
-    localparam Fs5  = 33784; // 739.99 Hz (F#5)
-
-    // 리프 노트 순서 (8개 반복)
-    // Pattern: D4 -> D5 -> A4 -> G4 -> G5 -> A4 -> F#5 -> A4
-    reg [31:0] riff_pitch [0:7];
-    initial begin
-        riff_pitch[0] = D4;
-        riff_pitch[1] = D5;
-        riff_pitch[2] = A4;
-        riff_pitch[3] = G4;
-        riff_pitch[4] = G5;
-        riff_pitch[5] = A4;
-        riff_pitch[6] = Fs5;
-        riff_pitch[7] = A4;
-    end
-
-    // 타이밍 설정
-    parameter NOTE_DURATION = 200; // 한 음당 200ms (템포 조절 가능)
+    // 400Hz (저음) ~ 1000Hz (고음) 사이를 왕복
+    localparam LOW_LIMIT  = 62500; // 400Hz
+    localparam HIGH_LIMIT = 25000; // 1000Hz
     
-    reg [31:0] time_cnt;
-    reg [2:0]  note_idx; // 0~7
+    // 소리 변화 속도 (값이 클수록 빠르게 변함)
+    // 1ms마다 이 값만큼 카운터 리밋을 줄이거나 늘림
+    localparam STEP = 25; 
+
+    reg direction; // 0: 음이 높아짐 (Limit 감소), 1: 음이 낮아짐 (Limit 증가)
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            time_cnt <= 0;
-            note_idx <= 0;
+            o_pitch   <= LOW_LIMIT;
+            direction <= 0;
             o_play_en <= 0;
-            o_pitch <= 0;
         end 
         else if (i_enable) begin
-            // 소리 켜기
-            o_play_en <= 1;
-            o_pitch <= riff_pitch[note_idx];
+            o_play_en <= 1; // 소리 켜기
 
-            // 타이머 동작
+            // 1ms마다 주파수 변경 (부드러운 Sweep 효과)
             if (i_tick) begin
-                if (time_cnt >= NOTE_DURATION - 1) begin
-                    time_cnt <= 0;
-                    note_idx <= note_idx + 1; // 다음 노트 (자동으로 0~7 오버플로우)
+                if (direction == 0) begin 
+                    // [상승 구간] 위~~~~ (Limit 값을 줄여서 고음으로)
+                    if (o_pitch > HIGH_LIMIT) 
+                        o_pitch <= o_pitch - STEP;
+                    else 
+                        direction <= 1; // 방향 전환 (이제 내려가자)
                 end 
-                else begin
-                    time_cnt <= time_cnt + 1;
+                else begin 
+                    // [하강 구간] 웅~~~~ (Limit 값을 늘려서 저음으로)
+                    if (o_pitch < LOW_LIMIT) 
+                        o_pitch <= o_pitch + STEP;
+                    else 
+                        direction <= 0; // 방향 전환 (이제 올라가자)
                 end
             end
         end 
         else begin
-            // 비활성화 시 초기화
+            // 비활성화 시 (게임 중일 때) 소리 끄고 초기화
             o_play_en <= 0;
-            o_pitch <= 0;
-            time_cnt <= 0;
-            note_idx <= 0;
+            o_pitch   <= LOW_LIMIT; 
+            direction <= 0;
         end
     end
 

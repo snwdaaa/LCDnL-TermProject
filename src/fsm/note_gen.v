@@ -12,56 +12,80 @@ module note_gen (
     output reg o_game_end    // 노래가 끝났음을 알리는 신호
 );
 
-    // ==========================================
-    // 악보 데이터 하드코딩
-    // ==========================================
-    
-    reg [31:0] note_time [0:NOTE_COUNT-1]; // 시간 저장
-    reg [1:0]  note_track [0:NOTE_COUNT-1]; // 트랙 저장 (1:윗줄, 2:아랫줄, 3:동시)
-    reg [31:0] note_pitch [0:NOTE_COUNT-1]; // 음계 저장 배열
+    // Astronomia (Coffin Dance) Frequencies
+    localparam F4  = 71586;  // 파 (Main Base)
+    localparam C5  = 47778;  // 도 (High)
+    localparam A4  = 56818;  // 라
+    localparam G4  = 63775;  // 솔
+    localparam Bb4 = 53629;  // 시b
+    localparam Ab4 = 60197;  // 라b (솔#)
+    localparam E4  = 75843;  // 미
 
-// ==========================================
-    // Smoke on the Water (Intro Riff)
-    // ==========================================
+    // 노트 개수 설정 (16개 패턴 * 8노트 = 128개)
+    parameter NOTE_COUNT = 200;
+    integer i, j; // 반복문 변수
     
-    // 1. 주파수 상수 정의 (50MHz 클럭 기준 카운터 값)
-    // 공식: 50,000,000 / (주파수 * 2)
-    localparam G3  = 127551; // 솔 (196 Hz)
-    localparam Bb3 = 107296; // 시b (233 Hz)
-    localparam C4  = 95556;  // 도 (262 Hz)
-    localparam Db4 = 90197;  // 레b (277 Hz) - 6번 프렛
-
-    // 노트 개수 (총 12개 노트로 구성된 리프)
-    parameter NOTE_COUNT = 12;
+    // 패턴별 베이스 노트 (첫 2개 음) 저장용 임시 변수
+    reg [31:0] base_note;
     
     reg [31:0] note_time  [0:NOTE_COUNT-1];
     reg [1:0]  note_track [0:NOTE_COUNT-1];
     reg [31:0] note_pitch [0:NOTE_COUNT-1];
+    
+    // 패턴별 시작 시간 계산 (한 패턴당 약 1920ms)
+    // idx: 현재 노트 인덱스 (0 ~ 127)
+    // time_offset: 현재 패턴의 시작 시간
+    integer idx;
+    integer time_offset;
 
     initial begin
-        // BPM 112 기준: 4분음표(1박) ? 536ms, 8분음표(반박) ? 268ms
-        // 시작 시간: 1000ms (1초 대기 후 시작)
-
-        // --- [Part 1] 0 - 3 - 5 ---
-        note_time[0] = 1000;       note_track[0] = 2; note_pitch[0] = G3;  // 아랫줄
-        note_time[1] = 1536;       note_track[1] = 1; note_pitch[1] = Bb3; // 윗줄
-        note_time[2] = 2072;       note_track[2] = 2; note_pitch[2] = C4;  // 아랫줄
-
-        // --- [Part 2] 0 - 3 - 6 - 5 --- 
-        // (여기가 5번, 6번 노트 구간입니다!)
-        note_time[3] = 3144;       note_track[3] = 1; note_pitch[3] = G3;  // 윗줄
-        note_time[4] = 3680;       note_track[4] = 2; note_pitch[4] = Bb3; // 아랫줄
+        // ==========================================
+        // Megalovania (1분 루프 버전)
+        // ==========================================
         
-        // [수정] 5번, 6번이 겹치지 않게 확실히 분리!
-        note_time[5] = 4216;       note_track[5] = 1; note_pitch[5] = Db4; // 윗줄 ("빠")
-        note_time[6] = 4752;       note_track[6] = 2; note_pitch[6] = C4;  // 아랫줄 ("빠~")
+        // 전체 4번 반복 (1번 돌 때마다 4가지 패턴 연주)
+        for (i = 0; i < 4; i = i + 1) begin
+            
+            // 4가지 패턴 반복 (D -> C -> B -> Bb)
+            for (j = 0; j < 4; j = j + 1) begin
+                
+                idx = (i * 32) + (j * 8); 
+                time_offset = 1000 + (i * 7680) + (j * 1920);
 
-        // --- [Part 3] 0 - 3 - 5 - 3 - 0 ---
-        note_time[7] = 5556;       note_track[7] = 1; note_pitch[7] = G3;  // 윗줄
-        note_time[8] = 6092;       note_track[8] = 2; note_pitch[8] = Bb3; // 아랫줄
-        note_time[9] = 6628;       note_track[9] = 1; note_pitch[9] = C4;  // 윗줄
-        note_time[10] = 7164;      note_track[10] = 2; note_pitch[10] = Bb3; // 아랫줄
-        note_time[11] = 7700;      note_track[11] = 1; note_pitch[11] = G3;  // 윗줄
+                // 베이스 노트 결정 (패턴마다 앞 2개 음이 다름)
+                if      (j == 0) base_note = D4;
+                else if (j == 1) base_note = C4;
+                else if (j == 2) base_note = B3;
+                else             base_note = Bb3;
+
+                // --- [Note 1] 따 (Base) ---
+                note_time [idx+0] = time_offset + 0;   note_track[idx+0] = 1; note_pitch[idx+0] = base_note;
+                
+                // --- [Note 2] 따 (Base) ---
+                note_time [idx+1] = time_offset + 120; note_track[idx+1] = 1; note_pitch[idx+1] = base_note; // 빠름!
+
+                // --- [Note 3] 딴 (High D5) ---
+                note_time [idx+2] = time_offset + 360; note_track[idx+2] = 2; note_pitch[idx+2] = D5; // 옥타브 점프
+
+                // --- [Note 4] 딴 (A4) ---
+                note_time [idx+3] = time_offset + 600; note_track[idx+3] = 2; note_pitch[idx+3] = A4;
+                
+                // --- [Note 5] 딴 (Ab4) ---
+                note_time [idx+4] = time_offset + 840; note_track[idx+4] = 1; note_pitch[idx+4] = Gs4;
+                
+                // --- [Note 6] 딴 (G4) ---
+                note_time [idx+5] = time_offset + 1080; note_track[idx+5] = 2; note_pitch[idx+5] = G4;
+                
+                // --- [Note 7] 딴 (F4) ---
+                note_time [idx+6] = time_offset + 1320; note_track[idx+6] = 1; note_pitch[idx+6] = F4;
+
+                // --- [Note 8] 따다 (D4 F4 G4) - 여기서는 G4로 마무리
+                note_time [idx+7] = time_offset + 1560; note_track[idx+7] = 2; note_pitch[idx+7] = G4;
+            end
+        end
+        
+        // 마지막 종료 처리
+        // note_time[NOTE_COUNT] 처리는 생략 (인덱스 범위 밖)
     end
     
     // 노트가 LCD 끝까지 가는 데 걸리는 시간 (약 5초 여유)

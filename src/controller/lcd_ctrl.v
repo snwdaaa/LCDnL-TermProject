@@ -97,7 +97,10 @@ module lcd_ctrl (
                 line1[4]<="a"; line1[5]<="m"; line1[6]<="e"; line1[7]<=" "; 
                 line1[8]<="O"; line1[9]<="v"; line1[10]<="e"; line1[11]<="r"; 
                 line1[12]<="!"; line1[13]<=" "; line1[14]<=" "; line1[15]<=" ";
-                // 아랫줄은 점수 등을 표시하거나 공백 유지
+                
+                for (i=0; i<16; i=i+1) begin
+                    line2[i] <= 8'h20; // 아랫줄 공백 
+                end
             end
             // (2) 우선순위 2: 게임 대기 화면 (시작 전)
             else if (i_game_start == 0) begin
@@ -167,11 +170,23 @@ module lcd_ctrl (
     assign o_hit_t2     = (line2[0] == 8'h4F);
     assign o_pre_hit_t2 = (line2[1] == 8'h4F);
     
-    // 음계 출력 (현재 Perfect 위치인 0번 기준)
-    // Normal 판정 시에는 Judgement 모듈이 이전 값을 쓰거나, 1ms 뒤에 0번으로 오는 값을 씀
+    // 음계 출력 수정: Perfect(0번) 또는 Normal(1번) 위치의 음계 값을 전달
     always @(*) begin
-        o_curr_pitch_t1 = pitch_buf_t1[0];
-        o_curr_pitch_t2 = pitch_buf_t2[0];
+        // [Track 1]
+        if (pitch_buf_t1[0] > 0)       
+            o_curr_pitch_t1 = pitch_buf_t1[0]; // 0번에 노트가 있으면 1순위 (Perfect)
+        else if (pitch_buf_t1[1] > 0)  
+            o_curr_pitch_t1 = pitch_buf_t1[1]; // 1번에 노트가 있으면 2순위 (Normal)
+        else                           
+            o_curr_pitch_t1 = 0;               // 둘 다 없으면 0
+
+        // [Track 2]
+        if (pitch_buf_t2[0] > 0)       
+            o_curr_pitch_t2 = pitch_buf_t2[0];
+        else if (pitch_buf_t2[1] > 0)  
+            o_curr_pitch_t2 = pitch_buf_t2[1];
+        else                           
+            o_curr_pitch_t2 = 0;
     end
 
     // ====================================================

@@ -82,6 +82,10 @@ module sys_base (
     
     // 게임 시작 상태를 저장할 레지스터
     reg r_game_start;
+    reg r_game_end;
+    
+    // "게임 시작 전" 또는 "게임 종료 후"에 켜지도록 OR 연산 추가
+    wire w_siren_on = (~r_game_start) || r_game_end;
     
     // [추가] 시작 버튼 누르면 게임 시작 상태로 변경
     always @(posedge clk or posedge rst) begin
@@ -122,7 +126,7 @@ module sys_base (
         .clk(clk),
         .rst(rst),
         .i_tick(w_game_tick),        // 1ms 틱 (gated 아님! 계속 흘러야 함)
-        .i_enable(~r_game_start),    // 게임 시작 전(0)일 때만 동작
+        .i_enable(w_siren_on),    // 게임 시작 전(0)일 때만 동작
         .o_play_en(w_intro_play_en),
         .o_pitch(w_intro_pitch)
     );
